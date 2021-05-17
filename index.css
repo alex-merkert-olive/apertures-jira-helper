@@ -1,0 +1,56 @@
+html, body {
+  font-family: 'Circular', 'Proxima Nova', 'Arial';
+  color: #fff;
+  background: #7c00ed;
+}
+
+.title, label {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.subtitle {
+  color: #e5d0ff;
+  font-size: 16px;
+  font-style: italic;
+}
+
+input {
+  height: 20px;
+  font-size: 16px;
+  width: 400px;
+}
+
+select {
+  font-size: 16px;
+  padding: 4px;
+  height: 28px;
+  width: 415px;
+}
+
+textarea {
+  font-size: 16px;
+  height: 200px;
+  width: 400px;
+  font-family: 'Circular', 'Proxima Nova', 'Arial';
+}
+
+input[type=checkbox] {
+  width: unset;
+  height: unset;
+}
+
+button {
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  color: #fff;
+  background: #1f003e;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #46007e;
+}

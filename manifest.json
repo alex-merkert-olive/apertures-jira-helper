@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Olive Jira Helper",
+  "description": "Better Jira management!",
+  "version": "1",
+  "author": "alex.merkert@oliveai.com",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "page_action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "images/get_started16.png",
+      "32": "images/get_started32.png",
+      "48": "images/get_started48.png",
+      "128": "images/get_started128.png"
+    },
+    "default_title": "JiraHelper"
+  },
+  "icons": {
+    "16": "images/get_started16.png",
+    "32": "images/get_started32.png",
+    "48": "images/get_started48.png",
+    "128": "images/get_started128.png"
+  },
+  "permissions": ["storage", "activeTab", "declarativeContent"]
+}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./index.css">
+    <script src="./index.js"></script>
+  </head>
+  <body>
+    <select id="card-type" onchange="updateFormFields(event.target.value)">
+      <option value="">[select a card type]</option>
+      <option value="collection">Collection</option>
+      <option value="aperture">Aperture</option>
+      <option value="api">API Endpoint</option>
+      <option value="loader">Data Loader</option>
+      <option value="visualization">Visualization</option>
+      <option value="store">Apertures Store Migration</option>
+      <option value="bug">Bug</option>
+      <option value="task">Task</option>
+    </select>
+    <div id="jira-form" style="display: none;">
+      <div>
+        <div class="title">Deadline</div>
+        <input data-id="deadline" onchange="update(event.target)" />
+      </div>
+      <div>
+        <div class="title">Assumptions</div>
+        <textarea data-id="assumptions" onchange="update(event.target)"></textarea>
+      </div>
+      <div class="section" id="aperture">
+        <div>
+          <div class="title">Collection</div>
+          <input data-id="collection" onchange="update(event.target)" />
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" data-id="external" onchange="update(event.target, 'checked')" />
+            External
+          </label>
+        </div>
+        <div>
+          <div class="title">Audience</div>
+          <div class="subtitle">Who is this aperture for?</div>
+          <input data-id="audience" onchange="update(event.target)" />
+        </div>
+        <div>
+          <div class="title">Purpose</div>
+          <div class="subtitle">What question does this aperture answer?</div>
+          <textarea data-id="purpose" onchange="update(event.target)"></textarea>
+        </div>
+        <div>
+          <div class="title">Partner</div>
+          <div class="subtitle">Who owns the data/metric for this aperture?</div>
+          <input data-id="partner" onchange="update(event.target)" />
+        </div>
+        <div>
+          <div class="title">Dimensions</div>
+          <div class="subtitle">What are the dimensions of this aperture?</div>
+          <select data-id="dimensions" onchange="update(event.target)">
+            <option value="1x1">1x1</option>
+            <option value="2x1">2x1 (wide)</option>
+            <option value="1x2">1x2 (tall)</option>
+            <option value="header-1">header (one column)</option>
+            <option value="header-2">header (two columns)</option>
+          </select>
+        </div>
+        <div>
+          <div class="title">Details</div>
+          <div class="subtitle">Other details about the aperture</div>
+          <textarea data-id="details" onchange="update(event.target)"></textarea>
+        </div>
+      </div>
+      <div class="section" id="api">
+        <div>
+          <div class="title">Endpoint</div>
+          <div class="subtitle">What is the endpoint?</div>
+          <input data-id="endpoint" onchange="update(event.target)" />
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" data-id="public-edge" onchange="update(event.target, 'checked')" />
+            Public Endpoint
+          </label>
+        </div>
+        <div>
+          <div class="title">Data Source</div>
+          <div class="subtitle">Where is the data coming from?</div>
+          <input data-id="data-source" onchange="update(event.target)" />
+        </div>
+        <div>
+          <div class="title">Business Logic</div>
+          <div class="subtitle">What, if any, business logic needs to be applied?</div>
+          <textarea data-id="business-logic" onchange="update(event.target)"></textarea>
+        </div>
+        <div>
+          <div class="title">Payload</div>
+          <div class="subtitle">What is the payload to return from the endpoint?</div>
+          <textarea data-id="payload" onchange="update(event.target)"></textarea>
+        </div>
+      </div>
+      <div class="section" id="visualization">
+        <div>
+          <div class="title">Data Representation</div>
+          <div class="subtitle">How is the data represented visually?</div>
+          <textarea data-id="data-representation" onchange="update(event.target)"></textarea>
+        </div>
+        <div>
+          <div class="title">Animation Description</div>
+          <div class="subtitle">How should this be animated?</div>
+          <textarea data-id="animation" onchange="update(event.target)"></textarea>
+        </div>
+        <div>
+          <div class="title">Colors</div>
+          <div class="subtitle">What are the default colors of this visualization?</div>
+          <textarea data-id="colors" onchange="update(event.target)"></textarea>
+        </div>
+        <div>
+          <div class="title">Edge Cases</div>
+          <div class="subtitle">Describe the edge cases - values equal zero, labels too big, too many values, not enough values...</div>
+          <div class="subtitle">(Provide additional mocks if possible)</div>
+          <textarea data-id="edge-cases" onchange="update(event.target)"></textarea>
+        </div>
+      </div>
+      <div class="section" id="loader">
+        <div>
+          <div class="title">Loader Type</div>
+          <select data-id="loader-type', event.target.value); setLoaderType(event.target.value)">
+            <option value="apertures-api">Apertures API</option>
+            <option value="google-sheets">Google Sheets</option>
+            <option value="generic">Generic</option>
+          </select>
+        </div>
+        <div>
+          <div class="title">Data Source</div>
+          <div class="subtitle" id="loader-type-source-description">Which apertures api endpoint will this use?</div>
+          <input data-id="data-source" onchange="update(event.target)" />
+        </div>
+        <div>
+          <div class="title">Payload</div>
+          <div class="subtitle">What is the shape of the payload to return from the mapper?</div>
+          <textarea data-id="payload" onchange="update(event.target)"></textarea>
+        </div>
+      </div>
+      <div class="section" id="collection">
+        <div>
+          <div class="title">Name</div>
+          <input data-id="name" onchange="update(event.target)" />
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" data-id="authorize-api" onchange="update(event.target, 'checked')" />
+            Public Collection
+          </label>
+        </div>
+      </div>
+      <div class="section" id="store">
+        <div>
+          <div class="title">Table Name</div>
+          <div class="subtitle">Name of the table for the store</div>
+          <input data-id="name" onchange="update(event.target)" />
+        </div>
+        <div>
+          <div class="title">Definition</div>
+          <div class="subtitle">What will this table look like?</div>
+          <textarea data-id="definition" onchange="update(event.target)"></textarea>
+        </div>
+      </div>
+      <div class="section" id="bug">
+        <div>
+          <div class="title">Context</div>
+          <div class="subtitle">What were you doing when this happened?</div>
+          <textarea data-id="context" onchange="update(event.target)"></textarea>
+        </div>
+        <div>
+          <div class="title">Steps to Reproduce</div>
+          <div class="subtitle">How do we reproduce this error?</div>
+          <textarea data-id="steps-to-reproduce" onchange="update(event.target)"></textarea>
+        </div>
+        <div>
+          <div class="title">Expected Result</div>
+          <div class="subtitle">What was supposed to happen?</div>
+          <textarea data-id="expected-result" onchange="update(event.target)"></textarea>
+        </div>
+        <div>
+          <div class="title">Version</div>
+          <div class="subtitle">What browser and version are you running?</div>
+          <input data-id="version" onchange="update(event.target)" />
+        </div>
+      </div>
+      <div class="section" id="task">
+        <div>
+          <div class="title">Timebox</div>
+          <div class="subtitle">What's the maximum amount of time to spend on this?</div>
+          <input data-id="timebox" onchange="update(event.target)" />
+        </div>
+        <div>
+          <div class="title">Goals</div>
+          <div class="subtitle">What needs to happen?</div>
+          <textarea data-id="goals" onchange="update(event.target)"></textarea>
+        </div>
+      </div>
+      <div>
+        <div class="title">Acceptance Criteria</div>
+        <textarea data-id="acceptance-criteria" onchange="update(event.target)"></textarea>
+      </div>
+    </div>
+    <div class="title">
+      <button onclick="generateJiraDescription()">Generate Description</button>
+    </div>
+  </body>
+</html>
