@@ -66,10 +66,6 @@ const loaderTypeSourceDescriptions = {
   'generic': 'How should this data be retrieved?',
 }
 
-// window.addEventListener('paste', event => {
-//   console.log(event.clipboardData.files[0]);
-// })
-
 function updateFormFields(cardType) {
   document.querySelector('#jira-form').style.display = 'block';
   currentType = cardType;
@@ -94,8 +90,12 @@ function updateFormFields(cardType) {
   });
 }
 
-function update(input, key = 'value') {
+function update(input) {
   const field = input.getAttribute('data-id');
+  let key = 'value';
+  if (field.type === 'checkbox') {
+    key = 'checked';
+  }
   const value = input[key];
   cardDetails[field] = value;
 }
@@ -142,3 +142,15 @@ function generateJiraDescription() {
   text.focus();
   text.setSelectionRange(0, result.length);
 }
+
+window.addEventListener('load', () => {
+  document.querySelector('#card-type')
+    .addEventListener('change', (event) => updateFormFields(event.target.value));
+
+  const inputs = Array.from(document.querySelectorAll('[data-id]'));
+  inputs.forEach(input => {
+    input.addEventListener('changed', () => update(input));
+  });
+
+  document.querySelector('#submit').addEventListener('click', generateJiraDescription);
+});
