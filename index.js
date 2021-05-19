@@ -149,7 +149,7 @@ window.addEventListener('load', () => {
 
   const inputs = Array.from(document.querySelectorAll('[data-id]'));
   inputs.forEach(input => {
-    input.addEventListener('changed', () => update(input));
+    input.addEventListener('change', () => update(input));
   });
 
   document.querySelector('#submit').addEventListener('click', generateJiraDescription);
