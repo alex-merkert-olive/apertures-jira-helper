@@ -60,6 +60,14 @@ const CARD_TEMPLATES = {
   },
 };
 
+const EFFECTS = {
+  setLoaderType: function setLoaderType(target) {
+    const loaderType = target.value;
+    const element = document.querySelector('#loader-type-source-description');
+    element.innerHTML = loaderTypeSourceDescriptions[loaderType];
+  }
+};
+
 const loaderTypeSourceDescriptions = {
   'apertures-api': 'Which apertures api endpoint will this use?',
   'google-sheets': 'What is the sheet id, and which sheets (tabs)?',
@@ -98,11 +106,6 @@ function update(input) {
   }
   const value = input[key];
   cardDetails[field] = value;
-}
-
-function setLoaderType(loaderType) {
-  const element = document.querySelector('#loader-type-source-description');
-  element.innerHTML = loaderTypeSourceDescriptions[loaderType];
 }
 
 function capitalize(s) {
@@ -149,7 +152,13 @@ window.addEventListener('load', () => {
 
   const inputs = Array.from(document.querySelectorAll('[data-id]'));
   inputs.forEach(input => {
-    input.addEventListener('change', () => update(input));
+    input.addEventListener('change', () => {
+      const effect = input.getAttribute('data-effect');
+      update(input);
+      if (effect && EFFECTS[effect]) {
+        EFFECTS[effect](input);
+      }
+    });
   });
 
   document.querySelector('#submit').addEventListener('click', generateJiraDescription);
