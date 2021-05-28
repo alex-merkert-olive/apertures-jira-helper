@@ -116,7 +116,7 @@ function generateJiraDescription() {
   console.log(JSON.stringify(cardDetails, null, 2));
   const array = Object.entries(cardDetails).map(([key, value]) => `*${
     key.split('-').map(capitalize).join(' ')
-  }*\n* ${value}`);
+  }*\n${value}`);
   const result = array.join('\n\n');
 
   const text = document.createElement('textarea');
