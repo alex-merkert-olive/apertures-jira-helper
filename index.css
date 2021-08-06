@@ -54,3 +54,55 @@ button {
 button:hover {
   background: #46007e;
 }
+
+button.delete {
+  background: #fff;
+  color: #f05;
+}
+
+button.delete:hover {
+  background: #ccc;
+}
+
+.user-story {
+  padding-left: 10px;
+  border-left: #ccc solid 2px;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.user-story button.delete {
+  position: absolute;
+  top: 0;
+  left: 420px;
+  padding: 0 5px;
+  font-size: 15pt;
+}
+
+.user-story > div {
+  margin-bottom: 3px;
+}
+
+.user-story > .as-a > input {
+  width: 348px;
+}
+
+.user-story > .i-want-to > input {
+  width: 304px;
+}
+
+.user-story > .so-i-can > input {
+  width: 316px;
+}
+
+.user-story > .as-a::before {
+  content: 'AS A ';
+}
+
+.user-story > .i-want-to::before {
+  content: 'I WANT TO ';
+}
+
+.user-story > .so-i-can::before {
+  content: 'SO I CAN ';
+}

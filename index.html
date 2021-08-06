@@ -7,14 +7,15 @@
   <body>
     <select id="card-type">
       <option value="">[select a card type]</option>
+      <option value="bug">Bug</option>
+      <option value="task">Task</option>
+      <option value="story">Story</option>
       <option value="collection">Collection</option>
       <option value="aperture">Aperture</option>
       <option value="api">API Endpoint</option>
       <option value="loader">Data Loader</option>
       <option value="visualization">Visualization</option>
       <option value="store">Apertures Store Migration</option>
-      <option value="bug">Bug</option>
-      <option value="task">Task</option>
     </select>
     <div id="jira-form" style="display: none;">
       <div>
@@ -197,11 +198,19 @@
           <textarea data-id="goals"></textarea>
         </div>
       </div>
-      <div>
-        <div class="title">Acceptance Criteria</div>
-        <textarea data-id="acceptance-criteria"></textarea>
+      <div class="section" id="story">
+        <div class="title">User Stories</div>
+        <div id="user-stories-container">
+          <!-- user story ui elements go here -->
+        </div>
+        <button id="add-user-story">Add User Story</button>
       </div>
+      <div>
     </div>
+      <div class="title">Acceptance Criteria</div>
+      <textarea data-id="acceptance-criteria"></textarea>
+    </div>
+  </div>
     <div class="title">
       <button id="submit">Generate Description</button>
     </div>

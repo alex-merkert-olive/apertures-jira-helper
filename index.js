@@ -7,6 +7,17 @@ const BASE_CARD = {
   'acceptance-criteria': '',
 }
 
+function getUserStories() {
+  const stories = Array.from(document.querySelectorAll('#user-stories-container .user-story'));
+  const text = stories.map(story => {
+    const asA = story.querySelector('.as-a > input').value;
+    const iWantTo = story.querySelector('.i-want-to > input').value;
+    const soICan = story.querySelector('.so-i-can > input').value;
+    return `*As a* ${asA}, *I want to* ${iWantTo} *so I can* ${soICan}.`;
+  });
+  return text.join('\n');
+}
+
 const CARD_TEMPLATES = {
   collection: {
     name: '',
@@ -58,6 +69,9 @@ const CARD_TEMPLATES = {
     goals: '',
     'acceptance-criteria': '',
   },
+  story: {
+    'user-stories': getUserStories,
+  },
 };
 
 const EFFECTS = {
@@ -87,6 +101,9 @@ function updateFormFields(cardType) {
     ...CARD_TEMPLATES[cardType],
   };
 
+  // special cases
+  document.querySelector('#user-stories-container').innerHTML = '';
+
   const inputs = Array.from(document.querySelectorAll('[data-id]'));
   inputs.forEach(input => {
     const field = input.getAttribute('data-id');
@@ -114,9 +131,15 @@ function capitalize(s) {
 
 function generateJiraDescription() {
   console.log(JSON.stringify(cardDetails, null, 2));
-  const array = Object.entries(cardDetails).map(([key, value]) => `*${
-    key.split('-').map(capitalize).join(' ')
-  }*\n${value}`);
+  const array = Object.entries(cardDetails).map(([key, value]) => {
+    let text = value;
+    if (typeof value === 'function') {
+      text = value();
+    }
+    return `*${
+      key.split('-').map(capitalize).join(' ')
+    }*\n${text}`;
+});
   const result = array.join('\n\n');
 
   const text = document.createElement('textarea');
@@ -146,6 +169,39 @@ function generateJiraDescription() {
   text.setSelectionRange(0, result.length);
 }
 
+function addUserStory() {
+  const container = document.querySelector('#user-stories-container');
+
+  const story = document.createElement('div');
+  story.className = 'user-story';
+
+  const asA = document.createElement('div');
+  asA.className = 'as-a';
+  const input0 = document.createElement('input');
+  asA.appendChild(input0);
+  story.appendChild(asA);
+
+  const iWantTo = document.createElement('div');
+  iWantTo.className = 'i-want-to';
+  const input1 = document.createElement('input');
+  iWantTo.appendChild(input1);
+  story.appendChild(iWantTo);
+
+  const soICan = document.createElement('div');
+  soICan.className = 'so-i-can';
+  const input2 = document.createElement('input');
+  soICan.appendChild(input2);
+  story.appendChild(soICan);
+
+  const deleteButton = document.createElement('button');
+  deleteButton.className = 'delete';
+  deleteButton.innerHTML = '&times;';
+  story.appendChild(deleteButton);
+  deleteButton.addEventListener('click', () => container.removeChild(story));
+
+  container.appendChild(story);
+}
+
 window.addEventListener('load', () => {
   document.querySelector('#card-type')
     .addEventListener('change', (event) => updateFormFields(event.target.value));
@@ -160,6 +216,8 @@ window.addEventListener('load', () => {
       }
     });
   });
+
+  document.querySelector('#add-user-story').addEventListener('click', addUserStory);
 
   document.querySelector('#submit').addEventListener('click', generateJiraDescription);
 });
